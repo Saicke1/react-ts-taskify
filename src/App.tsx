@@ -1,5 +1,17 @@
 import React from 'react';
 import './App.css';
+import InputField from './components/InputField';
+
+const App: React.FC = () => {
+  return (
+    <div className="App">
+      <span className="heading">Tasfkiy</span>
+      <InputField/>
+    </div>
+  );
+}
+
+export default App;
 
 /* let name : string; name = "Sarah";*/
 /* let age : number; */
@@ -62,13 +74,3 @@ let y:Y = {
   c: "Sarah",
   d: 33,
 } */
-
-function App() {
-  return (
-    <div className="App">
-      Hello World
-    </div>
-  );
-}
-
-export default App;

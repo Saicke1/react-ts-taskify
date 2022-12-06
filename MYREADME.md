@@ -124,3 +124,24 @@ importiere sie in App.css in Zeile 1
 }
 
 ### 7. create a State
+
+- importiere useState in App.tsx
+- erstelle ein useState in App.tsx und deklariere den Typ dieses states:
+const [todo, setTodo] = useState<string>("");
+- trage diesen State als Prop beim InputField ein:
+<InputField todo={todo} setTodo={setTodo}/>
+- trage den prop beim Inputfield.tsx ein:
+const InputField = ({ todo, setTodo}) => {....
+- erstelle ein interface in InputField.tsx außerhalb der Funktion, wo diese beiden props definiert werden:
+interface Props {
+    todo: string;
+    setTodo: React.Dispatch<React.SetStateAction<string>>;  <<< dies kann man sich kopieren vom state selbst, wenn man die Maus drüber hält.
+}
+- gebe dieses Interface bei den Props an, damit diese definiert werden:
+const InputField = ({ todo, setTodo} : Props) => { ....
+ODER
+const InputField: React.FC<Props> = ({ todo, setTodo}) => { ....
+- gib dem input den value des todo: value={todo}
+- gibt dem input ein onChange mit setTodo: onChange={(e) => setTodo(e.target.value)}
+- console log dies in App.tsx um zu sehen, ob dies funktioniert: console.log(todo);
+- entferne danach das console log wieder

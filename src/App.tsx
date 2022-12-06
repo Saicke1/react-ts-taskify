@@ -4,7 +4,8 @@ import './App.css';
 /* let name : string; name = "Sarah";*/
 /* let age : number; */
 /* let VarWithTwoDiffTypes : string | number; */
-/* let whatEver = any; das definiert einen any Typ */
+/* let whatEver : any; das definiert einen any Typ => nicht empfohlen, da es TS sinnlos macht */
+/* let newType : unknown;  Anstelle von Any ist dieser Type empfohlen*/
 /* let isLoggedIn : boolean; */
 /* let hobbies : string[]; array of objects with strings */
 /* let role : [number, string]; can only contain one number and one string in exactly this order*/
@@ -34,6 +35,33 @@ showName(name); */
 let showMyName : Function; einfache deklarierung einer Funktion */
 
 /* let printName : (name:string) => void; korrekte deklarierung einer Funktion */
+/* let printName : (name:string) => never; diese Funktion gibt nichts zurück */
+/* 
+interface Person {
+  name: string;
+  age?: number;
+};
+
+interface Guy extends Person {
+  profession: string;
+} */
+
+/* type X = {
+  a: string;
+  b: number;
+}
+
+type Y = X & {
+  c: string;
+  d: number;
+}
+
+let y:Y = {
+  a: "Nicole",
+  b: 35,
+  c: "Sarah",
+  d: 33,
+} */
 
 function App() {
   return (

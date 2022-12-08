@@ -218,3 +218,29 @@ interface Props{
     flex-wrap: wrap;
 }
 - erstelle eine neue Komponente SingleTodo.tsx mit rafce
+- installiere React Icons: https://react-icons.github.io/react-icons/
+npm install react-icons
+
+### 12. Passing Props zu SingleTodo.tsx
+
+- füge bei TodoList.tsx die Komponente SingleTodo mit den Props beim map ein:
+{todos.map(todo => ( <SingleTodo todo={todo} key={todo.id} todos={todos} setTodos={setTodos}/> ))}
+- Empfange die Props in SingleTodo.tsx:
+type Props = {
+    todo: Todo;
+    todos: Todo[];
+    setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+}
+const SingleTodo = ({todo, todos, setTodos}: Props) => {....
+- änder den div in ein form tag um bei SingleTodo.tsx
+- gib diesem Form tag eine Klasse: className='todosSingle
+- erstelle in diesem folgenden tag: <span className="todosSingleText"></span>
+- fülle in diesem span {todo.todo} ein und prüfe ob due die todos siehst
+
+
+
+
+
+
+- suche dir auf https://react-icons.github.io/react-icons/icons?name=bs die icons für Edit, Delete und Done raus
+- importiere sie in SingleTodo.tsx: import { IconName } from "react-icons/bs";

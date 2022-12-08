@@ -237,10 +237,65 @@ const SingleTodo = ({todo, todos, setTodos}: Props) => {....
 - erstelle in diesem folgenden tag: <span className="todosSingleText"></span>
 - fülle in diesem span {todo.todo} ein und prüfe ob due die todos siehst
 
+### 13. style und vervollständige SingleTodo.tsx
 
-
-
-
-
+- füge in dem Form Tag unter dem Span neue Spans ein:
+<div>
+    <span className="icon"></span>
+    <span className="icon"></span>
+    <span className="icon"></span>
+</div>
 - suche dir auf https://react-icons.github.io/react-icons/icons?name=bs die icons für Edit, Delete und Done raus
-- importiere sie in SingleTodo.tsx: import { IconName } from "react-icons/bs";
+- importiere sie in SingleTodo.tsx: import { XXIconName } from "react-icons/XX"; <<< Wichtig ist, dass die ersten zweit Buchstaben vom Icon Namen am ende nach dem Slash kommen
+- am ende sieht das so aus:
+<div>
+    <span className="icon"> <AiFillEdit/> </span>
+    <span className="icon"> <AiFillDelete/> </span>
+    <span className="icon"> <MdOutlineDone/> </span>
+</div>
+- importiere styles.css in SingleTodo.tsx und style die Todos:
+.todosSingle{
+    display: flex;
+    width: 29.5%;
+    border-radius: 5px;
+    padding: 20px;
+    margin-top: 15px;
+    background-image: url("https://img.freepik.com/free-photo/crumpled-yellow-paper-background-close-up_60487-2390.jpg?size=626&ext=jpg");
+}
+
+.todosSingleText{
+    flex: 1;
+    padding: 5px;
+    border: none;
+    font-size: 20px;
+}
+
+.todosSingleText:focus{
+    outline: none;
+}
+
+.icon{
+    margin-left: 10px;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+@media (max-width: 1100px) {
+    .todosSingle {
+      width: 45%;
+    }
+}
+
+@media (max-width: 700px) {
+    .input {
+      width: 95%;
+    }
+    .todos {
+      width: 95%;
+      flex-direction: column;
+    }
+    .todosSingle {
+      width: 95%;
+      margin-bottom: 10px;
+    }
+}

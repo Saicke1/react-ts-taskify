@@ -5,16 +5,25 @@
 https://create-react-app.dev/docs/adding-typescript/
 npx create-react-app my-app --template typescript
 
-### 2. Delete unnecessary files
+### 2. Delete unnecessary files and lines
 
 setupTests.ts
 reportWebVitals.ts
 logo.svg
 App.test.tsx
+favicon.ico
+logo192.png
+logo512.png
+manifest.json
+robots.txt
 
 - lösche in index.tsx die reportWebVitals
 - lösche in App.tsx den import der logo.svg und den inhalt des Div-Containers "App"
 - lösche den kompletten Inhalt aus App.css raus
+- lösche in index.html die refernce raus:
+<link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
 ### 3. Push die App in Github
 
@@ -123,7 +132,7 @@ importiere sie in App.css in Zeile 1
     box-shadow: 0 0 5px black;
 }
 
-### 7. create a State
+### 7. Erstelle a State
 
 - importiere useState in App.tsx
 - erstelle ein useState in App.tsx und deklariere den Typ dieses states:
@@ -145,3 +154,67 @@ const InputField: React.FC<Props> = ({ todo, setTodo}) => { ....
 - gibt dem input ein onChange mit setTodo: onChange={(e) => setTodo(e.target.value)}
 - console log dies in App.tsx um zu sehen, ob dies funktioniert: console.log(todo);
 - entferne danach das console log wieder
+
+### 8. Erstelle eine reuseable todo interface
+
+- erstelle im Ordner src eine neue Datei model.ts <<< es muss eine normale ts file sein
+- erstelle in dem model.ts ein interface mit den typen für ein todo:
+export interface Todo{
+    id: number;
+    todo: string;
+    isDone: boolean;
+}
+- erstelle in App.tsx ein neues State mit todos:
+const [todos, setTodos] = useState([]);
+- gib dem state den Type vom Model und importiere dadurch das model:
+...useState<Todo>([]);
+- füge eine handleAdd Funktion hinzu, um todos hinzuzufügen in das state:
+const handleAdd = () => {}
+- füge diese Funktion als Prop in das Input field ein bei App.tsx: handleAdd={handleAdd} 
+- füge diese Funktion bei InputField.tsx als Prop hinzu:
+handleAdd: () => void; <<< da die Funktion noch leer ist, wird dies so im interface props geschrieben
+- füge es als prop in der Funktion von InputField.tsx ein: ({ todo, setTodo, handleAdd } : Props)
+- füge die Funktion als onSubmit in die form ein: <form className='input' onSubmit={handleAdd}>
+- füge in App.tsx bei handleAdd ein event preventDefault ein und definiere das event:
+const handleAdd = (e: React.FormEvent) => {e.preventDefault();}
+- definiere das event ebenfalls in den props beim InputField.tsx
+
+### 9. erstelle die setTodos Logik
+
+- erstelle eine Funktion in dem handleAdd, um zu prüfen, ob was bereits im todo steht und das neue todo hinzuzufügen:
+if(todo){ setTodos([...todos, {id:Date.now(), todo:todo, isDone:false}]) }
+- statt todo:todo kann man auch nur todo schreiebn, da sie dasselbe sind
+- füge danach anbei, dass das input field gelerrt werden muss, nachdem das todo hinzugefügt wurde: setTodo("");
+- console log todos ion App.tsx um zu prüfen, ob es funktioniert und lösche es danach wieder
+
+### 10. ertelle ein useRef, damit das Enter beim Todo Eintrag funktioniert und den dunklen Hintergrund entfernt
+
+- füge beim Inoutfield.tsx bei handleAdd ebenfalls ein e event hinzu: <form className='input' onSubmit={(e) => handleAdd(e)}>
+- prüfe in App.tsx, ob du die todos auch sehen kannst: {todos.map((t) => (<li>{t.todo}</li>))}
+- erstelle in inputField.tsx ein useRef mit null als start value und dem typ <HTMLInputElement>: const inputRef = useRef<HTMLInputElement>(null);
+- füge den ref ins input tag ein: ref={inputRef}
+- füge in den form tag das useRef ein: <form className='input' onSubmit={(e) => {handleAdd(e); inputRef.current?.blur();}}>
+- prüfe ob es funktioniert und lösche danach die liste der todos aus App.tsx
+
+### 11. Erstelle den todoList Komponent
+
+- erstelle eine neue Component Datei TodoList.tsx mit rafce für das Grundgerüst
+- definiere bei der funktion :React.FC, damit es als Funktion erkannt wird und importiere sie in unser App.tsx
+- gib dem div in TodoList.tsx den classname todos und importiere die sytles.css Datei
+- importiere {todos, setTodos} als Prop in TodoLost.tsx
+- definiere die Props mit einem interface in TodoList: ({todos, setTodos}: Props)
+interface Props{
+    todos: Todo[];
+    setTodos: React.Dispatch<React.SetStateAction<Todo[]>>;
+};
+- importiere das model Todo, damit es definiert ist: import { Todo } from '../model';
+- gebe die Props dann in der Funktion an: const TodoList: React.FC<Props> = ({todos, setTodos}) => {
+- füge diese Props in App.tsx als Prop in den Component: <TodoList todos={todos} setTodos={setTodos}/>
+- style die todo Liste:
+.todos{
+    display: flex;
+    justify-content: space-evenly;
+    width: 90%;
+    flex-wrap: wrap;
+}
+- erstelle eine neue Komponente SingleTodo.tsx mit rafce

@@ -299,3 +299,39 @@ const SingleTodo = ({todo, todos, setTodos}: Props) => {....
       margin-bottom: 10px;
     }
 }
+
+### 14. Gebe den Icons eine Funkionalität
+
+- gebe dem Done Icon eine onClick Funktion mit dem Argmuent todo.id: onClick={() => handleDone(todo.id)}
+- erstelle die handleDon Funktion und definiere den Parameter id: const handleDone = (id: number) => {}
+- vergleiche in dieser Funktion die ids und setze bei gleicher id die isDone boolean die andere boolean um
+setTodos(todos.map((todo) => todo.id === id ? { ...todo, isDone: !todo.isDone} : todo));
+- erstelle in dem Form Tag ein Vergleich, ob er das todo normal anzeigen soll oder durchgestrichen <s> tag, wenn is Done true ist
+- füge dann den span vom todo entsprechend ein, dass es so aussieht:
+{todo.isDone ?(<s className="todosSingleText"> {todo.todo} </s>)
+: (<span className="todosSingleText"> {todo.todo} </span>)}
+
+- erstelle für den DeleteIcon ein handleFunktion mit der ID als Parameter
+- in diesem handle Delete Funktion kommt eine filter funktion rein: setTodos(todos.filter((todo) => todo.id !== id))
+
+- erstelle ein State für das editieren: const [edit, setEdit] = useState<boolean>(false);
+- erstelle einen zweiten State um den Text des todos zu editieren: const [editTodo, setEditTodo] = useState<string>(todo.todo);
+- erstelle ein onClick beim EditIcon, der zwei booleans prüft von edit und isDone:
+onClick={() => {if(!edit && !todo.isDone){setEdit(!edit)}}}
+- erstelle einen neuen vergleich in dem Form Tag, wo er ein input field anzeigen soll, wenn edit true ist oder ganz normal den todo, wenn edit false ist:
+{edit ? (<input/>) : (todo.isDone ? (<s className="todosSingleText"> {todo.todo} </s>)
+: (<span className="todosSingleText"> {todo.todo} </span>))}
+- füge in dem neuen input field den value von editTodo ein: value={editTodo}
+- füge in dem neuen input field den onChange von setEditTodo ein: onChange={(e) => setEditTodo(e.target.value)}
+- füge in dem neuen input field ein ClassName ein: className="todosSingleText"
+- füge in der tag Form ein onSubmit ein, wo das event und die id weiter gegeben wird: onSubmit={(e) => handleEdit(e, todo.id)}
+- erstelle die Funktion dazu mit den definierten Argumenten: const handleEdit = (e: React.FormEvent, id: number) => {}
+- erstelle in dieser Funktion den Abgleich und das update des todos und setze das edit auf false:
+setTodos(todos.map((todo) => (todo.id === id ? { ...todo, todo: editTodo} : todo)));    setEdit(false);
+
+### .15 Style das Edit Todo Feld
+
+- create a useRef in SingleTodo.tsx: const inputRef = useRef<HTMLInputElement>(null);
+- füge dies in dem input field wo der todo editiert wird, ein: ref={inputRef}
+- erstelle ein useEffect, bei dem der cursor sofort im Edit feld ist, sobald man auf editieren drückt:
+useEffect(() => {inputRef.current?.focus();}, [edit]);
